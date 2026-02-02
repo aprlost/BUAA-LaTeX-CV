@@ -1,0 +1,200 @@
+\documentclass[11pt, a4paper]{article}
+
+%----------------------------------------------------------------------------------------
+%	宏包导入
+%----------------------------------------------------------------------------------------
+% [页面边距设置]
+% top/bottom: 上下边距。如果内容写不下，可以将 1.5cm 改为 1.0cm
+% left/right: 左右边距。
+\usepackage[top=1.5cm, bottom=1.5cm, left=2cm, right=2cm]{geometry}
+
+\usepackage{xeCJK}       % 中文支持(必须使用 xelatex 编译)
+\usepackage{graphicx}    % 图片插入
+\usepackage{enumitem}    % 列表环境控制 (调整 itemize 的间距)
+\usepackage{titlesec}    % 标题格式控制 (调整 section 的字体和间距)
+\usepackage{xcolor}      % 颜色控制
+\usepackage{hyperref}    % 超链接
+\usepackage{tikz}        % 绘图 (用于 Logo 的绝对定位)
+\usepackage{tasks}       % 任务列表
+\usepackage{multicol}    % 多栏排版
+\usepackage{calc}        % 长度计算
+\usepackage{tabularx}    % 增强表格
+
+%----------------------------------------------------------------------------------------
+%	字体与格式设置
+%----------------------------------------------------------------------------------------
+\setmainfont{Times New Roman} % 西文主字体 (数字和英文)
+
+\hypersetup{
+	hidelinks, % 隐藏链接的边框和颜色(打印时不显示蓝色框)
+}
+
+% [中文设置]
+% Windows 用户保持默认即可 (SimSun=宋体, SimHei=黑体)
+% Mac 用户如果编译报错，请注释掉下面一行，解开 Songti SC 那行的注释
+\setCJKmainfont[BoldFont=SimHei, ItalicFont=KaiTi]{SimSun}
+% \setCJKmainfont[BoldFont=Songti SC Bold, ItalicFont=Kaiti SC]{Songti SC}
+
+% 定义“楷体”命令
+% AutoFakeBold=2.5 表示如果找不到粗楷体，就由机器自动加粗 2.5 倍
+\newCJKfontfamily\kaishu[AutoFakeBold=2.5]{KaiTi}
+
+\pagestyle{empty} % 去掉页码 (单页简历不需要页码)
+
+% [Section 标题格式定制]
+% \titlespacing*{命令}{左缩进}{段前距}{段后距}
+% 想要标题和正文挤得更紧一点？把 {6pt}{4pt} 改为 {3pt}{2pt}
+\titleformat{\section}
+{\Large\kaishu\bfseries\raggedright} % 格式：大号、楷体、加粗、左对齐
+{}{0em}
+{}
+[\titlerule] % 标题下方的横线
+\titlespacing*{\section}{0pt}{6pt}{4pt}
+
+% [列表环境全局压缩]
+% parsep: 段落间距; itemsep: 条目间距; topsep: 列表与上方文本间距
+% 这里的设置影响全局的 itemize。如果觉得太挤，把 1pt 改大。
+\setlist[itemize]{parsep=0pt, itemsep=1pt, topsep=1pt, leftmargin=1.5em}
+
+%----------------------------------------------------------------------------------------
+%	Logo设置 (使用 TikZ 绝对定位)
+%----------------------------------------------------------------------------------------
+\newcommand{\placelogo}{%
+	\begin{tikzpicture}[remember picture,overlay]
+		% [Logo 位置微调]
+		% xshift: 水平偏移 (正数右移，负数左移)
+		% yshift: 垂直偏移 (正数上移，负数下移)
+		% 这里的 -0.4cm 决定了 Logo 离顶部的距离。想上移就改成 0cm 或正数。
+		\node[anchor=north west, inner sep=0pt, xshift=1.5cm, yshift=-0.4cm] at (current page.north west) {
+			% [Logo 大小] height 控制高度，keepaspectratio 保持长宽比
+			% 如果没有图片文件，请暂时注释掉下面这行
+			\includegraphics[height=1.5cm, keepaspectratio]{logo.png}
+		};
+	\end{tikzpicture}%
+}
+
+%----------------------------------------------------------------------------------------
+%	自定义项目行宏
+%----------------------------------------------------------------------------------------
+% 用于 "项目名称 - 角色 - 时间" 的三栏排版
+\newcommand{\projectitem}[3]{%
+	\noindent%
+	\begin{minipage}[t]{0.60\linewidth}
+		\textbf{#1}
+	\end{minipage}%
+	\begin{minipage}[t]{0.20\linewidth}
+		\centering \textbf{#2}
+	\end{minipage}%
+	\begin{minipage}[t]{0.20\linewidth}
+		\raggedleft #3
+	\end{minipage}%
+	\par\vspace{0.1em}% 行后的微小间距
+}
+
+%----------------------------------------------------------------------------------------
+%	正文开始
+%----------------------------------------------------------------------------------------
+\begin{document}
+	
+	\placelogo % 放置左上角的 Logo
+	
+	%--- 头部信息 ---
+	\noindent
+	% [左侧文字区域] 宽度 0.73\textwidth
+	\begin{minipage}[b]{0.73\textwidth}
+		{\huge \kaishu \textbf{奶龙}} % 姓名
+		
+		\vspace{0.4em} % 姓名与下方信息的距离
+		
+		% 个人信息表格
+		\begin{tabular}{@{}ll}
+			\textbf{电话：}138-0000-0000 & \textbf{邮箱：}zhangsan@example.edu.cn \\
+			\textbf{出生年月：}2002.08 & \textbf{籍贯：}江苏南京 \\
+			\textbf{政治面貌：}预备党员 & \textbf{英语水平：}CET-6 (610分) \\
+		\end{tabular}
+	\end{minipage}%
+	\hfill % 填充空白，把左右两栏撑开
+	% [右侧照片区域] 宽度 0.24\textwidth
+	\begin{minipage}[b]{0.24\textwidth}
+		\raggedleft % 图片右对齐
+		\raisebox{0pt}[0pt][0pt]{%
+			% [照片大小] width 控制宽度
+			% 如果没有 photo.jpg，请先注释掉下面这行以免报错
+			\includegraphics[width=3.2cm, keepaspectratio]{photo.jpg}%
+		}
+	\end{minipage}
+	
+	% [头部与正文的间距]
+	% 负值表示向上拉，减小空白。如果觉得头部太挤，可以改为 -0.5em 或 0em
+	\vspace{-0.75em}
+	
+	%============================================================================
+	\section{教育经历}
+	
+	\noindent
+	% [教育经历表格]
+	% l @{\hskip 1.5em} 表示左对齐列，并在右侧强制插入 1.5em 的空白
+	% @{\extracolsep{\fill}} 让最后一列(时间)自动推到最右边
+	\begin{tabular*}{\textwidth}{l @{\hskip 1.5em} l @{\hskip 1.5em} l l @{\extracolsep{\fill}} r@{}}
+		\textbf{北京航空航天大学} & 奶龙学院 & \makebox[9em][l]{\textbf{虚拟奶龙技术}} & 本科 & 2023.09 -- 至今 \\
+	\end{tabular*}
+	
+	\begin{itemize}
+		\item \textbf{核心课程：}机器学习导论(98) \enspace 深度学习(96) \enspace 计算机视觉(95) \enspace 自然语言处理(97) \enspace 算法设计与分析(94) \enspace 概率论与数理统计(99)
+		\item \textbf{学业成绩：}GPA：3.9/4.0 \quad \textbf{专业排名：}3/120（前2.5\%）
+	\end{itemize}
+	
+	%============================================================================
+	\section{科研经历}
+	
+	\projectitem{基于多传感器融合的自动驾驶感知系统}{项目负责人}{2024.03 -- 2024.09}
+	\begin{itemize}
+		\item \textbf{项目描述：} 针对自动驾驶在恶劣天气下感知能力下降的问题，设计了一套基于 \textbf{LiDAR} 与 \textbf{Camera} 融合的感知系统。
+		\item \textbf{工作内容：}
+		\begin{itemize}
+			\item 搭建了基于 \textbf{ROS2} 的数据采集平台，完成了 KITTI 格式数据集的标注工作。
+			\item 提出了 \textbf{MV-Fusion} 算法，在特征层对点云与图像进行融合，有效提升了小目标检测精度。
+		\end{itemize}
+	\end{itemize}
+	
+	\projectitem{面向医疗影像的少样本分割网络(Med-Seg)\hspace{1em}\raisebox{-0.2em}{\href{www.baidu.com}{\includegraphics[height=1.5em]{eye.png}}}}{第一作者}{2023.09 -- 2023.12}
+	\begin{itemize}
+		\item \textbf{项目背景：} 医疗数据标注成本高昂，针对小样本场景下的分割失效问题，提出了一种基于原型网络的分割框架。
+		\item \textbf{主要贡献：} 引入了\textbf{注意力机制}对原型特征进行校准，减少了噪声干扰；使用 \textbf{Python/PyTorch} 复现了 DeepLabv3+ 作为基准对比，结果显示 Dice 系数提升 \textbf{3.2\%}。
+		\item \textbf{成果：} 论文已投稿至 MICCAI 2024 (在审)。
+	\end{itemize}
+	
+	%============================================================================
+	\section{项目经历/荣誉奖项}
+	
+	\noindent \textbf{中国大学生计算机设计大赛} \hfill \textbf{国家级二等奖} \quad 2026.05
+	% [特定列表的间距调整]
+	% nosep: 极度压缩，取消所有垂直间距
+	% topsep: 列表与上方文字的微调
+	\begin{itemize}[nosep, leftmargin=2em, topsep=2pt]
+		\item \textbf{项目内容：}开发了一款基于 \textbf{Flutter} 的视障人士辅助出行 APP，集成了物体识别与语音导航功能。
+	\end{itemize}
+	
+	% \vspace{0.2em} % 如果觉得奖项之间太拥挤，可以手动取消注释加一点间距
+	\noindent \textbf{美国大学生数学建模竞赛 (MCM/ICM)} \hfill \textbf{Finalist (特等奖提名)} \quad 2026.01
+	
+	\noindent \textbf{国家奖学金} \hfill \textbf{前 0.2\%} \quad 2025.12
+	
+	\noindent \textbf{学科竞赛奖学金} \hfill \textbf{一等奖} \quad 2025.12
+	
+	\noindent \textbf{学习优秀奖学金} \hfill \textbf{一等奖} \quad 2025.12
+	
+	\noindent \textbf{第十七届全国大学生数学竞赛（非数学A类）} \hfill \textbf{省级一等奖} \quad 2025.12
+	
+	\noindent \textbf{学习优秀奖学金} \hfill \textbf{一等奖} \quad 2024.12
+	
+	\noindent \textbf{第十六届全国大学生数学竞赛（非数学A类）} \hfill \textbf{省级一等奖} \quad 2024.12
+	
+	%============================================================================
+	\section{综合发展}
+	\begin{itemize}
+		\item \textbf{开发工具：}熟练使用 Git, Docker, Linux (Ubuntu), LaTeX。
+		\item \textbf{其他：}志愿时长学生工作等。
+	\end{itemize}
+	
+\end{document}
