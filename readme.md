@@ -210,3 +210,8 @@ height=1.5em：强制设置图片高度（大小）。你可以调整参数来�
 
 **Q: 如何导出 PDF？**
 **A:** 在 Overleaf 中点击 "Recompile" 旁边的下载图标，或者点击 "Menu" -> "Download PDF"。如果是本地环境，通常会自动生成可阅览的 PDF。
+
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=aprlost/BUAA-LaTeX-CV&type=Date)](https://star-history.com/#aprlost/BUAA-LaTeX-CV&Date)
